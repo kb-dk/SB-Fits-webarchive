@@ -1,0 +1,2 @@
+WORKINGDIR=$(pwd)
+OUTPUTDIR=$(echo $WORKINGDIR | sed 's/\([0-9][0-9][0-9][0-9]\)/\1-output/')
