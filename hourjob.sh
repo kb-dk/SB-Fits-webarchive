@@ -1,4 +1,17 @@
 #!/bin/bash
+
+SCRIPT_PATH="${BASH_SOURCE[0]}";
+if ([ -h "${SCRIPT_PATH}" ]) then
+  while([ -h "${SCRIPT_PATH}" ]) do SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
+fi
+pushd . > /dev/null
+cd `dirname ${SCRIPT_PATH}` > /dev/null
+SCRIPT_PATH=`pwd`;
+popd  > /dev/null
+
+source $SCRIPT_PATH/scripts/CONF
+
+
 # copy to public webserver
 (cd /home/scape/working/bjarne-fits-tests/2011-output; ls | grep tgz | while read I; do if [ ! -f /home/scape/public/fits-web-2011/$I ]; then cp $I /home/scape/public/fits-web-2011/; fi; done)
 #(cd /home/scape/working/bjarne-fits-tests/2005-output; ls | grep tgz | while read I; do if [ ! -f /home/scape/public/fits-web-2005/$I ]; then cp $I /home/scape/public/fits-web-2005/; fi; done)
