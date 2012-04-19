@@ -17,7 +17,7 @@ source $SCRIPT_PATH/CONF
 #first argument is the arc file
 ARCFILE=$1
 
-mkdir $SCRIPT_PATH/temp 2> /dev/null
+
 
 #magic stuff to extract arcname from filepath
 ARCNAME=$(echo $ARCFILE | rev | cut -d'/' -f1 | rev)
@@ -58,7 +58,7 @@ if [ $T -eq 1 ]; then #it does contain har
 		rm -rf $TEMPFOLDER
 	fi
 fi
-rm -rf $SCRIPT_PATH/temp
+#rm -rf $SCRIPT_PATH/temp
 #kill the reports folder, as the reports have now been tarred
 rm -rf $REPORTS
 

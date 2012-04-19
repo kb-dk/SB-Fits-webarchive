@@ -14,6 +14,7 @@ mkdir $FILES_DIR > /dev/null
 
 #This script reads a file, containing a list of ARC file paths, and invoke the fits_arc.sh script on each
 
+mkdir $SCRIPT_PATH/temp 2> /dev/null
 
 #cat the first param
 #read it one line at a time
