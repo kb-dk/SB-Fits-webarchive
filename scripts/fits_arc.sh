@@ -17,24 +17,29 @@ source $SCRIPT_PATH/CONF
 #first argument is the arc file
 ARCFILE=$1
 
+mkdir $SCRIPT_PATH/temp 2> /dev/null
+
 #magic stuff to extract arcname from filepath
 ARCNAME=$(echo $ARCFILE | rev | cut -d'/' -f1 | rev)
 
 #The reports folder, named after the arc file
-REPORTS=$ARCNAME
+REPORTS="$SCRIPT_PATH/temp/$ARCNAME"
+
+#temp folder
+TEMPFOLDER="$SCRIPT_PATH/temp/$(echo $ARCNAME-org)/"
 
 #does the arcname contain har, 0 or 1. TODO what is the meaning of this?
 T=$(echo $ARCNAME |grep har | wc -l)
 
+
 if [ $T -eq 1 ]; then #it does contain har
 	#if the report archive does not exist
 	if [ ! -f $OUTPUTDIR/$REPORTS.tgz ]; then
-		#temp folder
-		TEMPFOLDER=$(echo $ARCNAME-org)
+
 		#kill the temp folder
 		rm -rf $TEMPFOLDER
 		#unpack the arc file to the temp folder
-		./unpack_arc.sh $ARCFILE $TEMPFOLDER
+		$SCRIPT_PATH/unpack_arc.sh $ARCFILE $TEMPFOLDER
 
 		#kill the reports folder, if it exists
 		rm -rf $REPORTS
@@ -42,13 +47,18 @@ if [ $T -eq 1 ]; then #it does contain har
 		mkdir $REPORTS
 		#run fits, with a specified file on path
 		#recursively, on the files in the temp folder, dumping reports in the report folder
-		$FITS_HOME/fits.sh -r -i $TEMPFOLDER -o $REPORTS
+		echo "Starting fits on $TEMPFOLDER"
+		$FITS_HOME/fits.sh -r -i $TEMPFOLDER -o $REPORTS/
 		#tar the reports
-		tar cvzf $OUTPUTDIR/$REPORTS.tgz $REPORTS/*
+		mkdir -p $OUTPUTDIR
+		pushd $REPORTS/..
+		tar cvzf $OUTPUTDIR/`basename $REPORTS`.tgz $ARCNAME/*
+		popd
 		#kill the temp folder
 		rm -rf $TEMPFOLDER
 	fi
 fi
+rm -rf $SCRIPT_PATH/temp
 #kill the reports folder, as the reports have now been tarred
 rm -rf $REPORTS
 

@@ -10,11 +10,12 @@ popd  > /dev/null
 
 source $SCRIPT_PATH/CONF
 
-ESCAPED=`echo $SCRIPT_PATH | sed 's_/_\\\/_g' -`
+COMPLETE=$1
+SPLITS=$2
 
-for I in $(ls new*); do \
-	extension=${I##*.}
-	if [ $I == $extension ]; then 
-		echo "echo $SCRIPT_PATH/run.sh $SCRIPT_PATH/$I \>\& $ESCAPED\/$I.log | at now";
-	fi
-done
+SIZE=`wc -l $COMPLETE| cut -d' ' -f1`
+SPLITSIZE=`echo $SIZE / $SPLITS | bc`
+
+split -l $SPLITSIZE $COMPLETE new
+
+

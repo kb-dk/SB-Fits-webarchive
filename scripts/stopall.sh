@@ -10,11 +10,16 @@ popd  > /dev/null
 
 source $SCRIPT_PATH/CONF
 
-ESCAPED=`echo $SCRIPT_PATH | sed 's_/_\\\/_g' -`
+ORIGIFS=$IFS
 
-for I in $(ls new*); do \
-	extension=${I##*.}
-	if [ $I == $extension ]; then 
-		echo "echo $SCRIPT_PATH/run.sh $SCRIPT_PATH/$I \>\& $ESCAPED\/$I.log | at now";
-	fi
+# set $IFS to end-of-line
+IFS=`echo -en "\n\b"`
+
+for line in `ps ax | grep $SCRIPT_PATH| grep run.sh`; do
+	pid=`echo $line| sed 's/^ *//g' | cut -d' ' -f1`
+	echo $pid
+	kill $pid
 done
+
+# set $IFS back
+IFS=$ORIGIFS
