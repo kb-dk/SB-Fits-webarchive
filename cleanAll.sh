@@ -1,5 +1,3 @@
-#!/bin/bash
-
 
 SCRIPT_PATH="${BASH_SOURCE[0]}";
 if ([ -h "${SCRIPT_PATH}" ]) then
@@ -12,12 +10,6 @@ popd  > /dev/null
 
 source $SCRIPT_PATH/scripts/CONF
 
-YEAR=$1
-YEARLIST=$2
-
-mkdir $SCRIPT_PATH/$YEAR 2> /dev/null
-mkdir $SCRIPT_PATH/$YEAR-output 2> /dev/null
-cp $SCRIPT_PATH/scripts/* $SCRIPT_PATH/$YEAR
-cp $SCRIPT_PATH/scripts/processed.sh $SCRIPT_PATH/$YEAR-output
-#cp $YEARLIST $SCRIPT_PATH/$YEAR
-
+for I in '2005' '2006' '2007' '2008' '2009' '2010' '2011'; do \
+	$SCRIPT_PATH/$I/clean.sh
+done

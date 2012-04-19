@@ -10,11 +10,6 @@ popd  > /dev/null
 
 source $SCRIPT_PATH/CONF
 
-ESCAPED=`echo $SCRIPT_PATH | sed 's_/_\\\/_g' -`
-
-for I in $(ls $SCRIPT_PATH/new??); do \
-	extension=${I##*.}
-	if [ $I == $extension ]; then 
-		echo "echo $SCRIPT_PATH/run.sh $SCRIPT_PATH/$I \>\& $ESCAPED\/$I.log | at now";
-	fi
-done
+rm -rf $SCRIPT_PATH/temp
+rm -rf $SCRIPT_PATH/files
+rm -rf $SCRIPT_PATH/new??.log
