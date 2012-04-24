@@ -19,5 +19,6 @@ mkdir $SCRIPT_PATH/$YEAR 2> /dev/null
 mkdir $SCRIPT_PATH/$YEAR-output 2> /dev/null
 cp $SCRIPT_PATH/scripts/* $SCRIPT_PATH/$YEAR
 cp $SCRIPT_PATH/scripts/processed.sh $SCRIPT_PATH/$YEAR-output
+
 #cp $YEARLIST $SCRIPT_PATH/$YEAR
 

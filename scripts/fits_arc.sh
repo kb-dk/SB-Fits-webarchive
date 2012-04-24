@@ -12,6 +12,7 @@ popd  > /dev/null
 
 source $SCRIPT_PATH/CONF
 
+
 #This script extracts an arc file, and runs fits recursively on the content. The reports are tarred in the output dir
 
 #first argument is the arc file
