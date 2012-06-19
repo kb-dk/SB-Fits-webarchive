@@ -11,12 +11,13 @@ popd  > /dev/null
 source $SCRIPT_PATH/CONF
 
 FILE=$1; 
-FILENAME=$(echo $FILE | cut -d' ' -f2 | rev | cut -d'/' -f1 | rev); 
+FILENAME=$(echo $FILE | cut -d' ' -f2 | rev | cut -d'/' -f1 | rev); #WHY??
 OUTPUTFOLDER=$2;
 
-$ARC_UNPACKER_HOME/bin/unpack.sh -f $FILENAME -o $OUTPUTFOLDER --minResp=200 --maxResp=299 --naming=OFFSET
+$ARC_UNPACKER_HOME/bin/unpack.sh -f $FILE -o $OUTPUTFOLDER --minResp=200 --maxResp=299 --naming=OFFSET
 
-for unpackedFile in $OUTPUTFOLDER; do
-	extension=`echo $unpachedFile | rev | cut -d'-' -f1| rev`
-	mv $unpackedFile $unpackedFile.$extension
+
+for unpackedFile in $OUTPUTFOLDER/*; do
+	extension=`echo $unpackedFile | rev | cut -d'-' -f1| rev`
+	mv $unpackedFile "$unpackedFile.$extension"
 done

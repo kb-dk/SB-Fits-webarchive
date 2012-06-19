@@ -7,10 +7,10 @@ FITS_HOME=/home/scape/working/fits-0.6.0/
 # The arc unpacker folder
 ARC_UNPACKER_HOME=/home/scape/working/arc-unpacker-0.2/
 # The working dir
-WORKINGDIR=$(pwd)
+WORKINGDIR=$SCRIPT_PATH
 #The output dir
 OUTPUTDIR=$(echo $WORKINGDIR | sed 's/\([0-9][0-9][0-9][0-9]\)/\1-output/')
 #The maximum time a process can spend on a single file before being killed, in seconds
 WAIT_TIME=3600
 #The mail address to inform if a process is killed
-ADMIN_MAIL=bja@statsbiblioteket.dk
+ADMIN_MAIL=abr@statsbiblioteket.dk
