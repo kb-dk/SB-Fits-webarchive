@@ -10,6 +10,8 @@ popd  > /dev/null
 
 source $SCRIPT_PATH/CONF
 
+
+
 for I in $(ls new*); do \
-	echo "echo ./run.sh $I \>\& \/dev\/null | at now";
+	echo "echo $SCRIPT_PATH/run.sh $SCRIPT_PATH/$I \>\& $SCRIPT_PATH/$I.log | at now";
 done

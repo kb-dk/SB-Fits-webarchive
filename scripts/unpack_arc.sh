@@ -15,3 +15,8 @@ FILENAME=$(echo $FILE | cut -d' ' -f2 | rev | cut -d'/' -f1 | rev);
 OUTPUTFOLDER=$2;
 
 $ARC_UNPACKER_HOME/bin/unpack.sh -f $FILENAME -o $OUTPUTFOLDER --minResp=200 --maxResp=299 --naming=OFFSET
+
+for unpackedFile in $OUTPUTFOLDER; do
+	extension=`echo $unpachedFile | rev | cut -d'-' -f1| rev`
+	mv $unpackedFile $unpackedFile.$extension
+done
