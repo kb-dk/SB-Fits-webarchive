@@ -11,5 +11,8 @@ popd  > /dev/null
 source $SCRIPT_PATH/scripts/CONF
 
 for I in '2005' '2006' '2007' '2008' '2009' '2010' '2011'; do \
-	`$SCRIPT_PATH/$I/runall.sh | bash`
+	processes=`ps x | grep bash | grep new | grep -v grep | grep $I| grep run.sh | wc -l`
+	running=`echo $processes/3 |bc` 
+	echo "$I have $running processes "
+
 done

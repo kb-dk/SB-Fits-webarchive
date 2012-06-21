@@ -1,0 +1,49 @@
+
+
+This is an execution platform for running fits on a number of arc files. It is not very general, but it works. Here is how
+
+The system expects a structure like this
+
+/
+scripts/
+2005/
+2005-output/
+2006/
+2006-output/
+
+Do NOT CREATE THIS STRUCTURE
+
+first, run ./update-all.sh It will create the 2005-2011 folders, and populate them with the nessesary scripts. 
+
+Then, in each of the 20xx folders, create a resource file. A resource file contains the URLs of the arc files to download and process.
+It consists of lines like this
+netarkro@sb-prod-bar-001:/netarkiv/0004/filedir/134163-152-20111103020156-00060-sb-prod-har-005.statsbiblioteket.dk.arc
+netarkro@sb-prod-bar-001:/netarkiv/0004/filedir/134171-152-20111103034215-00035-kb-prod-har-001.kb.dk.arc
+netarkro@sb-prod-bar-001:/netarkiv/0004/filedir/134118-152-20111102094559-00012-sb-prod-har-002.statsbiblioteket.dk.arc
+netarkro@sb-prod-bar-001:/netarkiv/0015/filedir/134135-152-20111102124315-00002-kb-prod-har-004.kb.dk.arc
+
+Then run the load.sh script in the 20xx folders, like this
+./load.sh <resource-file> 4
+This splits the file in 4 equal-sized chunks, each of which will be processed as a separate job. 
+When you have done this for all the 20xx folders, go to the root dir again and run
+./startAll.sh
+This starts the specified number of jobs in each 20xx folder.
+You can see the number of currently running processes by using 
+./listRunning.sh
+
+To see the progress, run
+./status.sh
+It shows the number of processed archives vs. the total number, and the numbers done in the near past.
+
+The output for the 20xx run will be placed in the 20xx-output folder. This is tar.gz files containing the fits information for each resource in the arc file.
+
+To stop all the jobs again, use 
+./stopAll.sh
+Because of the intricate system of processes spawning processes, it might be a few minutes before everything have died down. The stop command only kills the bash scripts, so spawned java commands will have to terminate normally. 
+
+When running, the arc files are downloaded to
+20xx/files and the fits output and extracted resources is temporarily stored in 20xx/temp. To clean this up, use
+./cleanAll.sh
+Do not do this while the jobs are running.
+
+
