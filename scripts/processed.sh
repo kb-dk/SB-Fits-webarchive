@@ -22,7 +22,7 @@ OBJ=$(ls $OUTPUTDIR/*.tgz |
 		tar tvzf $I | wc -l
 #list the files, count the lines
 	done | 
-	sed 's/^/.+/' | \
+	sed 's/^/.+/' | 
 # Add .+ to the start of each line
 	bc | 
 # Add the results (. is the last result)
