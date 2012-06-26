@@ -45,6 +45,6 @@ B=$(ls -l $OUTPUTDIR/*.tgz |
 MB=$(echo $B/1000000 | bc)
 
 #count the number of files
-F=$(ls -l *.tgz | wc -l)
+F=$(ls -l $OUTPUTDIR/*.tgz | wc -l)
 
 echo $OBJ objekter - $MB Mbytes - $F ARC-files
