@@ -57,6 +57,7 @@ if [ $T -eq 1 ]; then #it does contain har
 		popd
 		#kill the temp folder
 		rm -rf $TEMPFOLDER
+		rm $ARCFILE
 	fi
 fi
 #rm -rf $SCRIPT_PATH/temp
