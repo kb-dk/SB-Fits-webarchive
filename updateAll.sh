@@ -1,12 +1,5 @@
-
-SCRIPT_PATH="${BASH_SOURCE[0]}";
-if ([ -h "${SCRIPT_PATH}" ]) then
-  while([ -h "${SCRIPT_PATH}" ]) do SCRIPT_PATH=`readlink "${SCRIPT_PATH}"`; done
-fi
-pushd . > /dev/null
-cd `dirname ${SCRIPT_PATH}` > /dev/null
-SCRIPT_PATH=`pwd`;
-popd  > /dev/null
+#!/bin/bash
+SCRIPT_PATH=$(dirname $(readlink -f $BASH_SOURCE[0]))
 
 source $SCRIPT_PATH/scripts/CONF
 
