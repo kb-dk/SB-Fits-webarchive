@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 SCRIPT_PATH="${BASH_SOURCE[0]}";
 if ([ -h "${SCRIPT_PATH}" ]) then
@@ -29,27 +29,30 @@ REPORTS="$SCRIPT_PATH/temp/$ARCNAME"
 #temp folder
 TEMPFOLDER="$SCRIPT_PATH/temp/$(echo $ARCNAME-org)/"
 
-#does the arcname contain har, 0 or 1. TODO what is the meaning of this?
+#does the arcname contain har, 0 or 1 (har = harvest) TODO what is the meaning of this?
 T=$(echo $ARCNAME |grep har | wc -l)
 
 
-if [ $T -eq 1 ]; then #it does contain har
+if [ $T -eq 1 ]; then #it does contain harvest
 	#if the report archive does not exist
 	if [ ! -f $OUTPUTDIR/$REPORTS.tgz ]; then
 
 		#kill the temp folder
 		rm -rf $TEMPFOLDER
-		#unpack the arc file to the temp folder
-		$SCRIPT_PATH/unpack_arc.sh $ARCFILE $TEMPFOLDER
-
-		#kill the reports folder, if it exists
+				#kill the reports folder, if it exists
 		rm -rf $REPORTS
 		#make the folder for the reports
 		mkdir $REPORTS
+
+		#unpack the arc file to the temp folder
+		time $SCRIPT_PATH/unpack_arc.sh $ARCFILE $TEMPFOLDER -report $REPORTS/ 2> $REPORTS/unpack-Performance.txt
+
 		#run fits, with a specified file on path
 		#recursively, on the files in the temp folder, dumping reports in the report folder
 		echo "Starting fits on $TEMPFOLDER"
-		$FITS_HOME/fits.sh -r -i $TEMPFOLDER -o $REPORTS/
+
+		time $FITS_HOME/fits.sh -r -i $TEMPFOLDER -o $REPORTS/ 2> $REPORTS/fits-Performance.txt
+
 		#tar the reports
 		mkdir -p $OUTPUTDIR
 		pushd $REPORTS/..
